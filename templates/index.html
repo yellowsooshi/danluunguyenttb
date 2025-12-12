@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alcohol Label Verification System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&family=Merriweather:wght@700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #1b1b1b;
+        background-color: #f0f0f0;
+      }
+
+      /* Official Government Banner */
+      .usa-banner {
+        background-color: #f0f0f0;
+        border-bottom: 1px solid #dfe1e2;
+        font-size: 0.875rem;
+        padding: 0.5rem 0;
+      }
+
+      .usa-banner__content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .usa-banner__icon {
+        margin-right: 0.5rem;
+      }
+
+      /* Header */
+      .site-header {
+        background-color: #112e51;
+        color: white;
+        padding: 1.5rem 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      .site-header__content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .site-header__logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .site-header__logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .site-header__tagline {
+        font-size: 0.875rem;
+        color: #aeb0b5;
+        margin: 0;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .page-title {
+        font-family: 'Merriweather', Georgia, serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1b1b1b;
+        margin: 0 0 1rem 0;
+        line-height: 1.2;
+      }
+
+      .page-intro {
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: #565c65;
+        max-width: 68ex;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #dfe1e2;
+      }
+
+      /* Alert Boxes */
+      .usa-alert {
+        background-color: #e7f6f8;
+        border-left: 4px solid #00bde3;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .usa-alert--info {
+        background-color: #e7f6f8;
+        border-left-color: #00bde3;
+      }
+
+      .usa-alert--error {
+        background-color: #f4e3db;
+        border-left-color: #e52207;
+      }
+
+      .usa-alert--success {
+        background-color: #ecf3ec;
+        border-left-color: #00a91c;
+      }
+
+      .usa-alert__heading {
+        font-family: 'Public Sans', sans-serif;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+        font-size: 1.125rem;
+      }
+
+      .usa-alert__text {
+        margin: 0;
+      }
+
+      /* Form Styling */
+      .usa-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+      }
+
+      .usa-form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .usa-label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #1b1b1b;
+        font-size: 1rem;
+      }
+
+      .usa-input,
+      .usa-select {
+        display: block;
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1rem;
+        line-height: 1.3;
+        color: #1b1b1b;
+        background-color: white;
+        border: 1px solid #565c65;
+        border-radius: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+
+      .usa-input:focus,
+      .usa-select:focus {
+        outline: 2px solid #2491ff;
+        outline-offset: 0;
+      }
+
+      .usa-select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23565c65' d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.5rem center;
+        padding-right: 2.5rem;
+      }
+
+      .usa-file-input {
+        border: 2px dashed #565c65;
+        padding: 1rem;
+        text-align: center;
+        background-color: #f9f9f9;
+        cursor: pointer;
+      }
+
+      .usa-file-input input[type="file"] {
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Buttons */
+      .usa-button {
+        font-family: 'Public Sans', sans-serif;
+        font-weight: 700;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border: 0;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        background-color: #005ea2;
+        color: white;
+        transition: background-color 0.15s ease-in-out;
+      }
+
+      .usa-button:hover {
+        background-color: #1a4480;
+      }
+
+      .usa-button:active {
+        background-color: #162e51;
+      }
+
+      .usa-button--big {
+        padding: 1rem 2rem;
+        font-size: 1.125rem;
+      }
+
+      /* Results Section */
+      .results-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+      }
+
+      .results-title {
+        font-family: 'Merriweather', Georgia, serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1b1b1b;
+        margin: 0 0 0.5rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #005ea2;
+      }
+
+      .results-subtitle {
+        color: #565c65;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+      }
+
+      /* Table Styling */
+      .usa-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-top: 1rem;
+      }
+
+      .usa-table thead {
+        background-color: #f0f0f0;
+      }
+
+      .usa-table th {
+        font-weight: 700;
+        text-align: left;
+        padding: 0.75rem 1rem;
+        border-bottom: 2px solid #1b1b1b;
+        font-size: 0.9375rem;
+      }
+
+      .usa-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #dfe1e2;
+        vertical-align: top;
+      }
+
+      .usa-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .usa-table tbody tr:hover {
+        background-color: #e7f6f8;
+      }
+
+      /* Status Badges */
+      .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-weight: 700;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+      }
+
+      .status-match {
+        background-color: #ecf3ec;
+        color: #00a91c;
+      }
+
+      .status-mismatch {
+        background-color: #f4e3db;
+        color: #b50909;
+      }
+
+      .status-not-found {
+        background-color: #faf3d1;
+        color: #936f38;
+      }
+
+      /* Field labels in table */
+      .field-name {
+        font-weight: 700;
+        color: #1b1b1b;
+      }
+
+      .value-text {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 0.9375rem;
+        color: #1b1b1b;
+      }
+
+      .value-null {
+        color: #71767a;
+        font-style: italic;
+      }
+
+      /* Footer */
+      .site-footer {
+        background-color: #f0f0f0;
+        border-top: 1px solid #dfe1e2;
+        padding: 2rem 0;
+        margin-top: 4rem;
+      }
+
+      .site-footer__content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .site-footer__links {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .site-footer__link {
+        color: #005ea2;
+        text-decoration: none;
+        font-size: 0.9375rem;
+      }
+
+      .site-footer__link:hover {
+        text-decoration: underline;
+      }
+
+      .site-footer__disclaimer {
+        font-size: 0.875rem;
+        color: #565c65;
+        line-height: 1.6;
+      }
+
+      /* Helper text */
+      .usa-hint {
+        color: #565c65;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Info Banner -->
+    <div class="usa-banner">
+      <div class="usa-banner__content">
+        <span class="usa-banner__icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#005ea2" d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm1 12H7V7h2v5zm0-6H7V4h2v2z"/>
+          </svg>
+        </span>
+        <span>Independent third-party label verification tool</span>
+      </div>
+    </div>
+
+    <!-- Site Header -->
+    <header class="site-header">
+      <div class="site-header__content">
+        <div class="site-header__logo">
+          <div>
+            <h1 class="site-header__logo-text">Label Verification Tool</h1>
+            <p class="site-header__tagline">Alcohol Beverage Label Compliance Assistant</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <h1 class="page-title">Alcohol Beverage Label Verification System</h1>
+      <p class="page-intro">
+        This system assists in verifying that alcohol beverage labels comply with regulatory requirements. 
+        Enter the product information as it should appear on the label, then upload images of the actual 
+        label for automated verification. The system will extract information from the labels using OCR 
+        and AI technology to compare against your submitted data.
+      </p>
+
+      <!-- Info Alert -->
+      <div class="usa-alert usa-alert--info">
+        <div class="usa-alert__body">
+          <h4 class="usa-alert__heading">Before You Begin</h4>
+          <p class="usa-alert__text">
+            Ensure label images are clear and well-lit. You may upload multiple images showing different 
+            sides of the label. Supported formats: JPG, PNG, PDF (max 10MB total).
+          </p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form method="post" enctype="multipart/form-data" class="usa-form">
+        <fieldset>
+          <legend class="usa-legend" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;">
+            Product Information
+          </legend>
+
+          <div class="form-row">
+            <div class="usa-form-group">
+              <label class="usa-label" for="brand">Brand Name</label>
+              <span class="usa-hint">The primary commercial brand name on the label</span>
+              <input
+                class="usa-input"
+                type="text"
+                id="brand"
+                name="brand"
+                value="{{ form_data.brand }}"
+                placeholder="e.g., Jack Daniel's"
+                required
+              />
+            </div>
+
+            <div class="usa-form-group">
+              <label class="usa-label" for="class_type">Product Class/Type</label>
+              <span class="usa-hint">Select the appropriate classification</span>
+              <select id="class_type" name="class_type" class="usa-select" required>
+                <option value="">- Select -</option>
+                {% for cls in classifications %}
+                <option value="{{ cls }}" {% if cls == form_data.class_type %}selected{% endif %}>
+                  {{ cls }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="usa-form-group">
+              <label class="usa-label" for="abv">Alcohol by Volume (ABV)</label>
+              <span class="usa-hint">Include percentage symbol (e.g., 40%)</span>
+              <input
+                class="usa-input"
+                type="text"
+                id="abv"
+                name="abv"
+                value="{{ form_data.abv }}"
+                placeholder="e.g., 40%"
+                required
+              />
+            </div>
+
+            <div class="usa-form-group">
+              <label class="usa-label" for="net_contents">Net Contents</label>
+              <span class="usa-hint">Volume with units (e.g., 750 ml)</span>
+              <input
+                class="usa-input"
+                type="text"
+                id="net_contents"
+                name="net_contents"
+                value="{{ form_data.net_contents }}"
+                placeholder="e.g., 750 ml"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="usa-form-group">
+            <label class="usa-label" for="labels">Upload Label Images</label>
+            <span class="usa-hint">You may select multiple files (JPG, PNG, PDF)</span>
+            <div class="usa-file-input">
+              <input
+                type="file"
+                id="labels"
+                name="labels"
+                accept="image/*,application/pdf"
+                multiple
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="usa-button usa-button--big">
+            <svg width="20" height="20" style="vertical-align: middle; margin-right: 0.5rem;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+            </svg>
+            Verify Label Information
+          </button>
+        </fieldset>
+      </form>
+
+      <!-- Error Message -->
+      {% if error_message %}
+      <div class="usa-alert usa-alert--error">
+        <div class="usa-alert__body">
+          <h4 class="usa-alert__heading">Verification Error</h4>
+          <p class="usa-alert__text">{{ error_message }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Results -->
+      {% if report %}
+      <div class="results-section">
+        <h2 class="results-title">Verification Results</h2>
+        <p class="results-subtitle">
+          Combined analysis from all uploaded label images. Results are compared against the 
+          information you provided in the form above.
+        </p>
+
+        <table class="usa-table">
+          <thead>
+            <tr>
+              <th scope="col">Field</th>
+              <th scope="col">Submitted Value</th>
+              <th scope="col">Extracted from Label</th>
+              <th scope="col">Verification Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for key, result in report.items() %}
+            <tr>
+              <td class="field-name">{{ key.replace('_', ' ').title() }}</td>
+              <td>
+                <span class="value-text">{{ result.user_value }}</span>
+              </td>
+              <td>
+                {% if result.extracted_value %}
+                  <span class="value-text">{{ result.extracted_value }}</span>
+                {% else %}
+                  <span class="value-null">Not detected</span>
+                {% endif %}
+              </td>
+              <td>
+                <span class="status-badge status-{{ result.status|replace(' ', '-')|lower }}">
+                  {{ result.status }}
+                </span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        {% set match_count = report.values()|selectattr('status', 'equalto', 'match')|list|length %}
+        {% set total_count = report|length %}
+        {% if match_count == total_count %}
+        <div class="usa-alert usa-alert--success" style="margin-top: 1.5rem;">
+          <div class="usa-alert__body">
+            <h4 class="usa-alert__heading">All Fields Verified</h4>
+            <p class="usa-alert__text">
+              All submitted information matches the extracted label data. The label appears to be 
+              compliant with the provided specifications.
+            </p>
+          </div>
+        </div>
+        {% else %}
+        <div class="usa-alert usa-alert--info" style="margin-top: 1.5rem;">
+          <div class="usa-alert__body">
+            <h4 class="usa-alert__heading">Review Required</h4>
+            <p class="usa-alert__text">
+              Some discrepancies were found between submitted data and extracted label information. 
+              Please review the results above and verify label accuracy.
+            </p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="site-footer__content">
+        <div class="site-footer__disclaimer">
+          <p>
+            <strong>Label Verification Tool</strong><br>
+            An independent tool for alcohol beverage label compliance checking.<br>
+            Not affiliated with any government agency.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
