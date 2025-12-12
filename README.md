@@ -45,7 +45,7 @@ Download from: https://github.com/UB-Mannheim/tesseract/wiki
 ### 2. Clone and Setup
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/yellowsooshi/danluunguyenttb.git
 cd danluunguyenttb
 
 # Create virtual environment
