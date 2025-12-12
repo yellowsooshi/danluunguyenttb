@@ -84,7 +84,7 @@ The application will be available at: http://127.0.0.1:5000
 
 ## How It Works
 
-1. **Upload Images** - User uploads one or more label images (JPG, PNG, PDF)
+1. **Upload Images** - User uploads one or more label images (JPG, PNG)
 2. **OCR Processing** - Tesseract extracts text from each image
 3. **AI Analysis** - All images and OCR text sent to OpenAI GPT-4 vision model
 4. **Field Extraction** - AI extracts brand, class, ABV, and net contents

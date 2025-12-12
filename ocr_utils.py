@@ -24,7 +24,7 @@ def extract_text(image_data: Union[bytes, io.BytesIO]) -> str:
     ----------
     image_data : Union[bytes, io.BytesIO]
         Raw bytes of the image or a BytesIO stream
-        Supported formats: PNG, JPEG, PDF (as image)
+        Supported formats: PNG, JPEG
 
     Returns
     -------
